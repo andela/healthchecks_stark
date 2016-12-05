@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 import warnings
+import dj_database_url   ####not working for my case
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -96,6 +99,7 @@ if os.environ.get("DB") == "postgres":
             'ENGINE':   'django.db.backends.postgresql',
             'NAME':     'hc',
             'USER':     'postgres',
+            'PASSWORD': '',
             'TEST': {'CHARSET': 'UTF8'}
         }
     }
