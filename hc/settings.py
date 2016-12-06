@@ -104,15 +104,16 @@ if os.environ.get("DB") == "postgres":
         }
     }
 
-if os.environ.get("DB") == "mysql":
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'USER':     'root',
-            'NAME':     'hc',
-            'TEST': {'CHARSET': 'UTF8'}
-        }
-    }
+#if os.environ.get("DB") == "mysql":
+#    DATABASES = {
+#        'default': {
+#            'ENGINE': 'django.db.backends.mysql',
+#            'USER':     'root',
+#            'NAME':     'hc',
+#            'TEST': {'CHARSET': 'UTF8'}
+#        }
+#    }
+
 
 LANGUAGE_CODE = 'en-us'
 
