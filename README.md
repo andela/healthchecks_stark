@@ -1,5 +1,5 @@
 # healthchecks
-https://travis-ci.org/andela/healthchecks_stark.svg?branch=deploy-on-heroku
+[![Build Status](https://travis-ci.org/andela/healthchecks_stark.svg?branch=deploy-on-heroku)](https://travis-ci.org/andela/healthchecks_stark)
 
 ![Screenshot of Welcome page](/stuff/screenshots/welcome.png?raw=true "Welcome Page")
 
