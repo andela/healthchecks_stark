@@ -1,5 +1,5 @@
 # healthchecks
-[![Build Status](https://travis-ci.org/andela/healthchecks_stark.svg?branch=deploy-on-heroku)](https://travis-ci.org/andela/healthchecks_stark)
+[![Build Status](https://travis-ci.org/andela/healthchecks_stark.svg?branch=deploy-on-heroku)](https://travis-ci.org/andela/healthchecks_stark)  [![Coverage Status](https://coveralls.io/repos/github/andela/healthchecks_stark/badge.svg?branch=deploy-on-heroku)](https://coveralls.io/github/andela/healthchecks_stark?branch=deploy-on-heroku)
 
 ![Screenshot of Welcome page](/stuff/screenshots/welcome.png?raw=true "Welcome Page")
 
