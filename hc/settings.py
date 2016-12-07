@@ -118,7 +118,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_L10N = True
-
 USE_TZ = True
 
 SITE_ROOT = "http://localhost:8000"
@@ -153,6 +152,8 @@ PUSHBULLET_CLIENT_SECRET = None
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 if os.path.exists(os.path.join(BASE_DIR, "hc/local_settings.py")):
     from .local_settings import *
