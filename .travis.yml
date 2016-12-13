@@ -3,15 +3,28 @@ python:
   - "2.7"
   - "3.5"
 install:
-    - pip install -r requirements.txt
-    - pip install braintree coveralls mock mysqlclient
+- pip install -r requirements.txt
+- pip install braintree coveralls mock mysqlclient
 env:
-  - DB=sqlite
-  - DB=mysql
-  - DB=postgres
+- DB=sqlite
+- DB=postgres
 addons:
-  postgresql: "9.4"
+  postgresql: '9.4'
+before_script:
+- psql -c 'CREATE DATABASE hc;' -U postgres
 script:
-  - coverage run --omit=*/tests/* --source=hc manage.py test
+- python manage.py makemigrations
+- python manage.py migrate
+- python manage.py collectstatic --noinput
+- coverage run --omit=*/tests/* --source=hc manage.py test
 after_success: coveralls
+cache: pip
+deploy:
+  provider: heroku
+  api_key:
+    secure: K06aQRbGck76cS0l/pHvboFaOYalzzb8x++Ct7QjDJb1R5Zlmn0r93uyaYdDuhgNqyZlYh9qP2esPxbeWqnia9IMBn3XcbB+6R853dgIShYGRNR+C077War+NHQXaaoaVV1S8t/GyZfXItBgwEB7ZkyO6bxapsRtJ0kc0V8oh8JFT1enJaBCn7qy/m7JtB9NZiBpDlvVmrQn2yMcgodYlQVfwvE1vMansM/c+H5nNlxLUCra+C7wDKQIYb5teXqnauiaQhm/2J6IryO8XX/LHNKIrJGab4JHtzfBltGw2ITfGb+OuffgCUGXso8a3lXnqxCheoCITJtLoTTwGFPKdKHuZCZZPxTGZWa1GSry1hPJz54iszENFQZBNET6SPBJZYUUXosPK7dg0I2gsN/HQE3fCOf5yb8t2EzP80XuuHoKVjdR9dc2XIJhdJ3OfhaeizK+mdOuFY8jaK4D6yOXLMGoCAdVyUoEgV79eLHmOPUDaCjMvuBLtxfXI08Y13yXF5ZKCKnKJoq7amKPLCwvhc6hxnGkOQ7aI0AvlUhTsGOWMygstGOoZ2NrCpa6B+5W45WZm2hGAdnIqTpQJHSsnmP1CkifMTaN24I9d5sJXjV67KAHhOdyEK9AMNq20KPgmyNXDvKsIaLrAiuZmef3uiDKI1JrDwReTpj6IcccY68=
+  app: healthchecks-stark
+  on:
+    repo: andela/healthchecks_stark
+    branch: deploy-on-heroku
 cache: pip
