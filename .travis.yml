@@ -27,4 +27,3 @@ deploy:
   on:
     repo: andela/healthchecks_stark
     branch:develop
-cache: pip
