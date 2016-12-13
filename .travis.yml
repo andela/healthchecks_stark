@@ -7,11 +7,21 @@ install:
 - pip install braintree coveralls mock mysqlclient
 env:
 - DB=sqlite
+<<<<<<< HEAD
 - DB=mysql
 - DB=postgres
 addons:
   postgresql: '9.4'
 script:
+- DB=postgres
+addons:
+  postgresql: '9.4'
+before_script:
+- psql -c 'CREATE DATABASE hc;' -U postgres
+script:
+- python manage.py makemigrations
+- python manage.py migrate
+- python manage.py collectstatic --noinput
 - coverage run --omit=*/tests/* --source=hc manage.py test
 after_success: coveralls
 cache: pip
@@ -23,3 +33,4 @@ deploy:
   on:
     repo: andela/healthchecks_stark
     branch: develop
+
