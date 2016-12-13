@@ -12,6 +12,7 @@ class PauseTestCase(BaseTestCase):
         r = self.client.post(url, "", content_type="application/json",
                              HTTP_X_API_KEY="abc")
 
+
         ### Assert the expected status code and check's status
 
     def test_it_validates_ownership(self):
@@ -22,6 +23,6 @@ class PauseTestCase(BaseTestCase):
         r = self.client.post(url, "", content_type="application/json",
                              HTTP_X_API_KEY="abc")
 
-        self.assertEqual(r.status_code, 400)
+
 
         ### Test that it only allows post requests
