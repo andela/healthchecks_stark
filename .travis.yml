@@ -32,4 +32,3 @@ deploy:
     repo: andela/healthchecks_stark
     branch: develop
 
-
