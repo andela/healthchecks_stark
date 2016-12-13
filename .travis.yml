@@ -26,5 +26,5 @@ deploy:
   app: healthchecks-stark
   on:
     repo: andela/healthchecks_stark
-    branch: deploy-on-heroku
+    branch:develop
 cache: pip
