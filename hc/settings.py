@@ -13,9 +13,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import warnings
 import dj_database_url
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config()
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 HOST = "localhost"
@@ -154,20 +151,13 @@ PUSHOVER_EMERGENCY_EXPIRATION = 86400
 PUSHBULLET_CLIENT_ID = None
 PUSHBULLET_CLIENT_SECRET = None
 
+# Update database configuration with $DATABASE_URL.
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
 if os.path.exists(os.path.join(BASE_DIR, "hc/local_settings.py")):
     from .local_settings import *
 else:
     warnings.warn("local_settings.py not found, using defaults")
-
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/static/'
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, '../static'),
-)
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'

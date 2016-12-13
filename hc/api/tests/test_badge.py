@@ -13,6 +13,7 @@ class BadgeTestCase(BaseTestCase):
 
     def test_it_rejects_bad_signature(self):
         r = self.client.get("/badge/%s/12345678/foo.svg" % self.alice.username)
+
         ### Assert the expected response status code
 
     def test_it_returns_svg(self):
