@@ -49,6 +49,8 @@ class PingTestCase(TestCase):
         r = self.client.get("/ping/%s/" % self.check.code,
                             HTTP_X_FORWARDED_FOR=ip)
         ping = Ping.objects.latest("id")
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(ping.remote_addr, "1.1.1.1")
         ### Assert the expected response status code and ping's remote address
 
         ip = "1.1.1.1, 2.2.2.2"
@@ -62,6 +64,8 @@ class PingTestCase(TestCase):
         r = self.client.get("/ping/%s/" % self.check.code,
                             HTTP_X_FORWARDED_PROTO="https")
         ping = Ping.objects.latest("id")
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(ping.scheme, 'https')
         ### Assert the expected response status code and ping's scheme
 
     def test_it_never_caches(self):
