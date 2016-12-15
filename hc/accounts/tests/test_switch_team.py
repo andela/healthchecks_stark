@@ -14,7 +14,7 @@ class SwitchTeamTestCase(BaseTestCase):
         r = self.client.get(url, follow=True)
 
         # Assert the contents of
-        self.assertContains(r, "This belongs to Alice")
+        self.assertIn(b"This belongs to Alice",r.content)
 
     def test_it_checks_team_membership(self):
         self.client.login(username="charlie@example.org", password="password")
