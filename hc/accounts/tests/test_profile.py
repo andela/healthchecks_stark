@@ -18,7 +18,7 @@ class ProfileTestCase(BaseTestCase):
         self.alice.profile.refresh_from_db()
         token = self.alice.profile.token
         ### Assert that the token is set
-        self.assertNotEqual(token,"")
+        self.assertFalse(len(token)<10)
 
         ### Assert that the email was sent and check email content
         self.assertEqual(len(mail.outbox), 1)
