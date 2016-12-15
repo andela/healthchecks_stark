@@ -36,5 +36,5 @@ class BaseTestCase(TestCase):
         self.charlie.save()
 
         # Set Charles not to have access to Alice's stuff
-        self.profile.team_access_allowed = False
-        
+        charlies_profile = Profile(user=self.charlie)
+        charlies_profile.save()
