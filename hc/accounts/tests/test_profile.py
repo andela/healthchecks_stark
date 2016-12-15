@@ -17,13 +17,15 @@ class ProfileTestCase(BaseTestCase):
         # profile.token should be set now
         self.alice.profile.refresh_from_db()
         token = self.alice.profile.token
-        ### Assert that the token is set
-        self.assertFalse(len(token)<10)
+        # Assert that the token is set
+        self.assertFalse(len(token) < 10)
 
-        ### Assert that the email was sent and check email content
+        # Assert that the email was sent and check email content
         self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(mail.outbox[0].subject, 'Set password on healthchecks.io')
-        self.assertIn('Here\'s a link to set a password for your account on healthchecks.io',mail.outbox[0].body)
+        self.assertEqual(mail.outbox[0].subject,
+                         'Set password on healthchecks.io')
+        self.assertIn(
+            'Here\'s a link to set a password for your account on healthchecks.io', mail.outbox[0].body)
 
     def test_it_sends_report(self):
         check = Check(name="Test Check", user=self.alice)
@@ -31,10 +33,12 @@ class ProfileTestCase(BaseTestCase):
 
         self.alice.profile.send_report()
 
-        ###Assert that the email was sent and check email content
+        # Assert that the email was sent and check email content
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Monthly Report')
-        self.assertIn('This is a monthly report sent by healthchecks.io.',mail.outbox[0].body,)
+        self.assertIn(
+            'This is a monthly report sent by healthchecks.io.', mail.outbox[0].body,)
+
     def test_it_adds_team_member(self):
         self.client.login(username="alice@example.org", password="password")
 
@@ -46,14 +50,17 @@ class ProfileTestCase(BaseTestCase):
         for member in self.alice.profile.member_set.all():
             member_emails.add(member.user.email)
 
-        ### Assert the existence of the member emails
-        self.assertNotEqual(len(member_emails),0)
+        # Assert the existence of the member emails
+        self.assertNotEqual(len(member_emails), 0)
         self.assertTrue("frank@example.org" in member_emails)
 
-        ###Assert that the email was sent and check email content
+        # Assert that the email was sent and check email content
         self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(mail.outbox[0].subject, 'You have been invited to join alice@example.org on healthchecks.io')
-        self.assertIn('invites you to their healthchecks.io account.',mail.outbox[0].body,)
+        self.assertEqual(mail.outbox[
+                         0].subject, 'You have been invited to join alice@example.org on healthchecks.io')
+        self.assertIn(
+            'invites you to their healthchecks.io account.', mail.outbox[0].body,)
+
     def test_add_team_member_checks_team_access_allowed_flag(self):
         self.client.login(username="charlie@example.org", password="password")
 
@@ -115,7 +122,7 @@ class ProfileTestCase(BaseTestCase):
         # Expect only Alice's tags
         self.assertNotContains(r, "bobs-tag.svg")
 
-    ### Test it creates and revokes API key
+    # Test it creates and revokes API key
 
     def test_it_creates_api_key(self):
         self.client.login(username="bob@example.org", password="password")
