@@ -16,6 +16,7 @@ class CreateCheckTestCase(BaseTestCase):
 
         if expected_error:
             self.assertEqual(r.status_code, 400)
+
             ### Assert that the expected error is the response error
 
         return r
@@ -35,6 +36,8 @@ class CreateCheckTestCase(BaseTestCase):
         assert "ping_url" in doc
         self.assertEqual(doc["name"], "Foo")
         self.assertEqual(doc["tags"], "bar,baz")
+        self.assertEqual(doc["n_pings"], 0)
+        self.assertEqual(doc["last_ping"], None)
 
         ### Assert the expected last_ping and n_pings values
 
@@ -47,6 +50,7 @@ class CreateCheckTestCase(BaseTestCase):
 
     def test_it_accepts_api_key_in_header(self):
         payload = json.dumps({"name": "Foo"})
+
 
         ### Make the post request and get the response
         r = {'status_code': 201} ### This is just a placeholder variable
