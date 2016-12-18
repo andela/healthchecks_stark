@@ -20,4 +20,5 @@ class ApiAdminTestCase(BaseTestCase):
         ch.save()
         self.assertEqual(ch.value, "test-token")
 
+        self.assertEqual(ch.value, 'test-token')
         ### Assert for the push bullet

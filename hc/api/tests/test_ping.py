@@ -49,11 +49,9 @@ class PingTestCase(TestCase):
         r = self.client.get("/ping/%s/" % self.check.code,
                             HTTP_X_FORWARDED_FOR=ip)
         ping = Ping.objects.latest("id")
+        assert ping.remote_addr == ip
+        assert r.status_code == 200
 
-
-
-
-        ### Assert the expected response status code and ping's remote address
 
         ip = "1.1.1.1, 2.2.2.2"
         r = self.client.get("/ping/%s/" % self.check.code,
@@ -66,15 +64,38 @@ class PingTestCase(TestCase):
         r = self.client.get("/ping/%s/" % self.check.code,
                             HTTP_X_FORWARDED_PROTO="https")
         ping = Ping.objects.latest("id")
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(ping.scheme, 'https')
         ### Assert the expected response status code and ping's scheme
 
     def test_it_never_caches(self):
         r = self.client.get("/ping/%s/" % self.check.code)
         assert "no-cache" in r.get("Cache-Control")
-    def test_check_status_after_ping:
-        check = Check()
+
+    def test_check_status_after_ping(self):
+        self.check_status = "paused"
+        self.check.save()
+        r = self.client.get("/ping/%s/" % self.check.code)
+        check = Check.objects.latest("id")
+        assert check.status == "up"
+        ### Test that when a ping is made a check with a paused status changes status
+
+        ping = Ping.objects.latest("id")
+        assert ping.scheme == "http"
+
+    def test_post_ping_works(self):
+        r = self.client.post("/ping/%s/" % self.check.code)
+        assert r.status_code == 200
+        ### Test that a post to a ping works
+
+
+    def test_csrf_client_head(self):
+        csrf_client = Client(enforce_csrf_checks=True)
+        r = csrf_client.post("/ping/%s/" % self.check.code)
+        assert r.status_code == 200
+
+        ### Test that the csrf_client head works
         
 
-    ### Test that when a ping is made a check with a paused status changes status
-    ### Test that a post to a ping works
-    ### Test that the csrf_client head works
+
+
