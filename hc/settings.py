@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import warnings
 import dj_database_url
-
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 HOST = "localhost"
@@ -98,19 +96,21 @@ if os.environ.get("DB") == "postgres":
             'ENGINE':   'django.db.backends.postgresql',
             'NAME':     'hc',
             'USER':     'postgres',
+            'PASSWORD': '',
             'TEST': {'CHARSET': 'UTF8'}
         }
     }
 
-if os.environ.get("DB") == "mysql":
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'USER':     'root',
-            'NAME':     'hc',
-            'TEST': {'CHARSET': 'UTF8'}
-        }
-    }
+#if os.environ.get("DB") == "mysql":
+#    DATABASES = {
+#        'default': {
+#            'ENGINE': 'django.db.backends.mysql',
+#            'USER':     'root',
+#            'NAME':     'hc',
+#            'TEST': {'CHARSET': 'UTF8'}
+#        }
+#    }
+
 
 LANGUAGE_CODE = 'en-us'
 
@@ -161,4 +161,3 @@ if os.path.exists(os.path.join(BASE_DIR, "hc/local_settings.py")):
     from .local_settings import *
 else:
     warnings.warn("local_settings.py not found, using defaults")
-
