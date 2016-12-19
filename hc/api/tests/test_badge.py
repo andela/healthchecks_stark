@@ -24,3 +24,4 @@ class BadgeTestCase(BaseTestCase):
         r = self.client.get(url)
         self.assertContains(r, '#4c1', status_code=200)
         ### Assert that the svg is returned
+

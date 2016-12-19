@@ -9,6 +9,7 @@ class ApiAdminTestCase(BaseTestCase):
         self.check = Check.objects.create(user=self.alice, tags="foo bar")
         self.alice.is_staff = True
         self.alice.is_superuser = True
+        self.alice.save()
 
         ### Set Alice to be staff and superuser and save her :)
 
@@ -17,6 +18,7 @@ class ApiAdminTestCase(BaseTestCase):
 
         ch = Channel(user=self.alice, kind="pushbullet", value="test-token")
         ch.save()
+        self.assertEqual(ch.value, "test-token")
 
         self.assertEqual(ch.value, 'test-token')
         ### Assert for the push bullet
