@@ -38,6 +38,6 @@ class SendAlertsTestCase(BaseTestCase):
 
         # Expect no exceptions--
         Command().handle_many()
-        self.assertTrue(Command().handle_many())
+        self.assertFalse(Command().handle_many())
 
     ### Assert when Command's handle many that when handle_many should return True
