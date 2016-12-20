@@ -13,9 +13,11 @@ class CreateCheckTestCase(BaseTestCase):
     def post(self, data, expected_error=None):
         r = self.client.post(self.URL, json.dumps(data),
                              content_type="application/json")
-        print(expected_error)
+    
         if expected_error:
             self.assertEqual(r.status_code, 400)
+
+            self.assertEqual(r.json()['error'], expected_error)
 
             ### Assert that the expected error is the response error
 
@@ -33,7 +35,6 @@ class CreateCheckTestCase(BaseTestCase):
         self.assertEqual(r.status_code, 201)
 
         doc = r.json()
-        print(doc)
         assert "ping_url" in doc
         self.assertEqual(doc["name"], "Foo")
         self.assertEqual(doc["tags"], "bar,baz")
@@ -53,7 +54,7 @@ class CreateCheckTestCase(BaseTestCase):
         payload = json.dumps({"name": "Foo", "api key": "abc"})
         r = self.client.post(self.URL, payload, content_type="application/json")
         self.assertEqual(r.status_code, 400)
-        
+
 
 
         ### Make the post request and get the response
