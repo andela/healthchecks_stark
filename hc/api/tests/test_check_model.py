@@ -12,6 +12,8 @@ class CheckModelTestCase(TestCase):
 
         check.tags = " foo  bar "
         self.assertEquals(check.tags_list(), ["foo", "bar"])
+        check.tags = " "
+        self.assertEquals(check.tags_list(), [])
         ### Repeat above test for when check is an empty string
 
     def test_status_works_with_grace_period(self):
@@ -35,4 +37,9 @@ class CheckModelTestCase(TestCase):
         check.status = "paused"
         self.assertFalse(check.in_grace_period())
 
+        check.status = "new"
+        self.assertFalse(check.in_grace_period())
+
+
     ### Test that when a new check is created, it is not in the grace period
+
